@@ -29,10 +29,10 @@ function sum(n1, n2) {
     document.write(`<p>A soma de ${n1} + ${n2} é igual a ${result}.</p>`);
 }
 
-// Invocando a funçao
+// Invocando a função
 sum(n1, n2); // Enviando os argumentos
 
-// FUNÇAÕ COM RETORNO
+// FUNÇÂO COM RETORNO
 const num1 = 50;
 const num2 = 3;
 
