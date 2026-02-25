@@ -75,4 +75,4 @@ document.write(`<p>O dobro de ${x} é ${dobro(x)}.</p>`);
 const calculadora = (a, operador, b) => {
     return eval(`${a} ${operador} ${b}`);
 }
-document.write(`<p>O resultado da operação matemática é ${calculadora(1100, "-", 1)}.</p>`);
+document.write(`<p>O resultado da operação matemática é ${calculadora(1100, "+", 1)}.</p>`);
