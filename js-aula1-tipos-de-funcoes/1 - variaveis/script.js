@@ -1,7 +1,3 @@
-//comentario linha
-
-/*comentario de bloco*/
-
 // crtl + ; transforma em um comentario
 
 //Variaveis podem ser declaradas de 3 formas:
@@ -17,11 +13,11 @@ document.write(cidade);
 
 let nome = "Diego";
 nome = "Maria";
-document.write("<br>")
+document.write("<br>");
 document.write(nome);
 
 const pais = "Brasil"
 pais = "Argentina"
 //Valor de uma constante não pode ser alterado
-document.write("<br>")
+document.write("<br>");
 document.write(pais);
