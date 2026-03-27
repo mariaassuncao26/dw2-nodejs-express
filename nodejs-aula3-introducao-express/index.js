@@ -6,7 +6,6 @@ const express = require("express");
 // Criando uma instância do Express
 const app = express();
 
-
 // Configurando o EJS
 app.set('view engine', 'ejs');
 
