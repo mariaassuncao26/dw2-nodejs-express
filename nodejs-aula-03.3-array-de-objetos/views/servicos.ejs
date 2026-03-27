@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços</title>
+</head>
+<body>
+    <h1>Bem-vindo a página de serviços</h1>
+    <hr>
+    <h3>Confira nossos serviços!</h3>
+
+    <!-- Exibindo o array de objetos em uma tabela com o forEach -->
+
+    <table border="1">
+        <tr>
+            <th>Serviço</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+        </tr>
+
+        <% servicos.forEach(function(servico) { %>
+            <tr>
+                <td><%= servico.servico %></td>
+                <td><%= servico.descricao %></td>
+                <td><%= servico.preco %></td>
+            </tr>
+        <% }) %>
+
+    </table>
+
+    <p><a href="/">Voltar</a></p>
+</body>
+</html>

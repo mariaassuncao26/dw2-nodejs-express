@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu primeiro site em Node.js e Express.js</title>
+</head>
+<body>
+    <h1>Bem-vindo a página de produtos</h1>
+    <hr>
+    <h3>Confira nossos produtos!</h3>
+    
+    <!-- Exibindo uma variável Javascript dentro do HTML -->
+    <!-- Comentário no EJS <%# %> -->
+
+    <!-- Percorrendo o vetor através do forEach -->
+    <% listaProdutos.forEach(function(produto) { %>
+        <p> 
+            <a href="/produtos/<%= produto %>">
+
+            <%= produto %> 
+
+            </a>        
+        </p>
+    <% }) %>
+
+    <p><a href="/">Voltar</a></p>  
+</body>
+</html>
