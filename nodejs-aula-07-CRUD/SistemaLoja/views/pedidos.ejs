@@ -1,0 +1,55 @@
+<%- include ('partials/header.ejs') %>
+<%- include ('partials/navbar.ejs') %>
+
+    <!-- FORMULÁRIO DE CADASTRO -->
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Cadastrar Pedido</h1>
+                </div>
+                <div class="card-body">
+                    <form action="/pedidos/cadastrar" method="POST">
+                        <label for="">Número do pedido:</label>
+                        <input type="text" name="numero" placeholder="Insira o número do pedido" class="form-control" required>
+                        
+                        <label for="">Valor do pedido:</label>
+                        <input type="text" name="valor" placeholder="Insira o valor do pedido" class="form-control" required>
+                        <br>
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                        <button type="reset" class="btn btn-danger">Limpar</button>
+                    </form>
+                    <hr>
+                </div>
+            </div>
+        </div>
+
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>Pedidos</h1>
+            </div>
+            <div class="card-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Número:</th>
+                            <th>Valor:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% pedidos.forEach(pedido => { %>
+                        <tr>
+                            <td><img src="imgs/order.png" width="30px"></td>
+                            <td><%= pedido.numero %></td>
+                            <td><%= pedido.valor.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}) %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<%- include ('partials/footer.ejs') %>
