@@ -5,6 +5,7 @@
 import express from "express";
 
 import Pedido from "../models/Pedido.js";
+import Cliente from "../models/Cliente.js";
 
 // Método do Express usado para criar rotas da aplicação
 const router = express.Router();
@@ -20,12 +21,29 @@ router.get("/pedidos",function(req,res){
     // ]
 
     // AQUI IREMOS CHAMAR O MODEL "PEDIDO", INVOCAR O MÉTODO findAll() PARA BUSCAR TODOS OS REGISTROS DA TABELA DE PEDIDO
-    Pedido.findAll().then(pedidos => {
+    // Pedido.findAll().then(pedidos => {
+    //     res.render("pedidos", {
+    //         pedidos : pedidos
+    //     });
+    // }).catch(error => {
+    //     console.log("Ocorreu um erro ao buscar os pedidos." + error);
+    // });
+
+    // Fazendo INNER JOIN para trazer as informações de cliente junto com as informações do Pedido
+    Pedido.findAll({
+        include: [
+            {
+                model: Cliente, // Inclui o modelo Cliente relacionado
+                required: true, // Garante que somente pedidos com clientes relacionados sejam retornados
+            }
+        ]
+    }).then(pedidos => {
         res.render("pedidos", {
+            // Passando a lista de pedidos para a página
             pedidos : pedidos
         });
     }).catch(error => {
-        console.log("Ocorreu um erro ao buscar os pedidos." + error);
+        console.log(`Ocorreu um erro ao listar os pedidos. ${error}`)
     });
 });
 
