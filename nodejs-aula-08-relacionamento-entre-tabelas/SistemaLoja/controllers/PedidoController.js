@@ -6,6 +6,7 @@ import express from "express";
 
 import Pedido from "../models/Pedido.js";
 import Cliente from "../models/Cliente.js";
+import { where } from "sequelize";
 
 // Método do Express usado para criar rotas da aplicação
 const router = express.Router();
@@ -30,43 +31,60 @@ router.get("/pedidos",function(req,res){
     // });
 
     // Fazendo INNER JOIN para trazer as informações de cliente junto com as informações do Pedido
-    Pedido.findAll({
-        include: [
-            {
-                model: Cliente, // Inclui o modelo Cliente relacionado
-                required: true, // Garante que somente pedidos com clientes relacionados sejam retornados
-            }
-        ]
-    }).then(pedidos => {
+
+    // Realizando ambas as consultas em paralelo
+    Promise.all([
+        Pedido.findAll({
+            include: [
+                {
+                    model: Cliente, // Inclui o modelo Cliente relacionado
+                    required: true, // Garante que somente pedidos com clientes relacionados sejam retornados
+                },
+            ],
+        }),
+        // Buscar todos os clientes
+        Cliente.findAll(),
+    ]).then(([pedidos, clientes]) => {
         res.render("pedidos", {
-            // Passando a lista de pedidos para a página
-            pedidos : pedidos
+            // Passando a lista de pedidos e clientes para a página
+            pedidos : pedidos,
+            clientes : clientes
         });
     }).catch(error => {
         console.log(`Ocorreu um erro ao listar os pedidos. ${error}`)
     });
 });
 
-
-// ROTA DE CADASTRO DE PEDIDOS (subrota / cadastrar)
-// cadastrar é post()
-router.post("/pedidos/cadastrar", (req,res) => {
-    // CRIANDO AS VARIÁVEIS QUE IRÃO ARMAZENAR OS DADOS VINDOS DO FORMULÁRIO
-    const numero  = req.body.numero;
+// ROTA DE CADASTRO DE PEDIDOS
+router.post("/pedidos/cadastrar", (req, res) => {
+    // CAPTURAR OS DADOS DO FORMULÁRIO
+    const numero = req.body.numero;
     const valor = req.body.valor;
-
-    // Enviando os dados para o banco
-    // O método create cadastra informações no BD
+    const clienteId = req.body.clienteId;
+    // CADASTRANDO NO BANCO
     Pedido.create({
-    // coluna   //variável
-        numero: numero,
-        valor: valor,
-        // Se a promessa for bem sucedida, o usuário será direcionado para a página de clientes
+        numero : numero,
+        valor : valor,
+        // clienteId
+        cliente_id : clienteId,
     }).then(() => {
         res.redirect("/pedidos");
-        // Falha da promessa
     }).catch(error => {
-        console.log("Ocorreu um erro ao cadastrar o pedido. " + error);
+        console.log(error);
+    });
+});
+
+// ROTA DE EXCLUSÃO DE PEDIDOS
+router.get("/pedidos/excluir/:id", (req, res) => {
+    const id = req.params.id;
+    Pedido.destroy({
+        where: {
+            id : id,
+        },
+    }).then(() => {
+        res.redirect("/pedidos");
+    }).catch(error => {
+        console.log(error);
     });
 });
 

@@ -5,16 +5,29 @@
         <div class="container">
             <div class="card">
                 <div class="card-header">
-                    <h1>Cadastrar Pedido</h1>
+                    <h1>Cadastrar pedido</h1>
                 </div>
                 <div class="card-body">
                     <form action="/pedidos/cadastrar" method="POST">
-                        <label for="">Número do pedido:</label>
+                        <label>Número do pedido:</label>
                         <input type="text" name="numero" placeholder="Insira o número do pedido" class="form-control" required>
                         
-                        <label for="">Valor do pedido:</label>
+                        <label>Valor do pedido:</label>
                         <input type="text" name="valor" placeholder="Insira o valor do pedido" class="form-control" required>
+                        
+                        <label>Cliente</label>
+                        <!-- SELECT PARA SELEÇÃO DO CLIENTE -->
+                        <select name="clienteId" class="form-control" required>
+                            <option value="" selected disabled>Selecione um cliente</option>
+                            <% clientes.forEach(cliente => { %>
+                                <option value="<%= cliente.id %>"> 
+                                    <%= cliente.nome %> 
+                                </option>
+                            <% }) %>
+                        </select>
                         <br>
+
+                        <!-- BOTÃO -->
                         <button type="submit" class="btn btn-success">Cadastrar</button>
                         <button type="reset" class="btn btn-danger">Limpar</button>
                     </form>
@@ -23,6 +36,7 @@
             </div>
         </div>
 
+        <!--  TABELA DE EXIBIÇÃO DOS PEDIDOS -->
 
     <div class="container">
         <div class="card">
@@ -37,6 +51,7 @@
                             <th>Número:</th>
                             <th>Valor:</th>
                             <th>Nome do cliente:</th>
+                            <th>Ações:</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,6 +61,12 @@
                             <td><%= pedido.numero %></td>
                             <td><%= pedido.valor.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}) %></td>
                             <td><%= pedido.cliente.nome %></td>
+
+                            <!-- BOTÃO DE EXCLUIR -->
+                            <td>
+                                <a onclick="return confirm('Deseja mesmo excluir o pedido?')"
+                                href="/pedidos/excluir/<%= pedido.id %>" class="btn btn-danger">Excluir</a>
+                            </td>
                         </tr>
                         <% }) %>
                     </tbody>
