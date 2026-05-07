@@ -25,6 +25,9 @@ import Usuario from "./models/Usuario.js";
 // Importando as Associações
 import associations from "./config/associations.js";
 
+// Importando o MIDDLEWARE DE AUTENTICAÇÃO
+import Auth from "./middlewares/Auth.js";
+
 // Realizando a conexão com o banco de dados
 connection
   .authenticate()
@@ -66,22 +69,22 @@ app.use(express.static("public"));
 // Configurando o Express para aceitar dados vindo de formulários
 app.use(express.urlencoded({ extended: false }));
 
+// CONFIGURANDO SESSÃO DE USUÁRIO
+app.use(session({
+  secret: "minhalojasecret",
+  cookie: {maxAge: 3600000}, // Sessão expira em 30 segundor (mudar depois)
+  saveUninitialized: false, // Não salva sessões vazias (sem informações)
+  resave: false, // Evita que ele re-salve sessões
+}));
+
 // Ativando o uso das ROTAS
 app.use("/", ClienteController);
 app.use("/", ProdutoController);
 app.use("/", PedidoController);
 app.use("/", UsuarioController);
 
-// CONFIGURANDO SESSÃO DE USUÁRIO
-app.use(session({
-  secret: "minhalojasecret",
-  cookie: {maxAge: 30000}, // Sessão expira em 30 segundor (mudar depois)
-  saveUninitialized: false, // Não salva sessões vazias (sem informações)
-  resave: false, // Evita que ele re-salve sessões
-}));
-
 // ROTA PRINCIPAL
-app.get("/", function (req, res) {
+app.get("/", Auth, function (req, res) {
   res.render("index");
 });
 

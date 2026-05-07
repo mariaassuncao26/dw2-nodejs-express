@@ -70,9 +70,10 @@ router.post("/autenticacao", (req, res) => {
                     email : usuario.email
                 }
                 // res.redirect("/");
-                res.send(`Sessão do usuário criada com sucesso!<br>
-                    ID do usuário logado: ${req.session.usuario['id']}<br>
-                    E-mail do usuário logado: ${req.session.usuario['email']}`);
+                // res.send(`Sessão do usuário criada com sucesso!<br>
+                //     ID do usuário logado: ${req.session.usuario['id']}<br>
+                //     E-mail do usuário logado: ${req.session.usuario['email']}`);
+                res.redirect("/")
             }
             // SE A SENHA ESTIVER INCORRETA
             else{
