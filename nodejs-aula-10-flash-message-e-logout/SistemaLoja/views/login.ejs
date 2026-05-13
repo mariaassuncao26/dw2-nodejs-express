@@ -1,0 +1,35 @@
+<%- include ('partials/header.ejs') %>
+<%- include ('partials/navbar.ejs') %>
+
+    <!-- VERIFICANDO SE HÁ ALERTAS E EXIBINDO -->
+     <% if (messages.danger) { %>
+        <div class="alert alert-danger alert-dismissible fade show mx-4">
+            <button class="btn-close" data-bs-dismiss="alert"></button>
+            <%= messages.danger %>
+        </div>
+    <% } %>
+
+
+<div class="container col-4">
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>Login de administrador</h2>
+        </div>
+        <div class="card-body m-auto">
+            <p style="color: red; font-size: 0.7em;">
+                Você precisa estar logado para acessar os recursos do painel administrativo
+            </p>
+            <form action="/autenticacao" method="POST">
+                <label>E-mail:</label>
+                <input type="email" name="email" placeholder="email@exemplo.com" class="form-control" required>
+                <label>Senha:</label>
+                <input type="password" name="senha" placeholder="Insira sua senha" class="form-control" required>
+                <br>
+                <button type="submit" class="btn btn-success btn-block">Entrar</button>
+            </form>
+            <hr>
+            <h6>Não possui conta? <a href="/cadastro">Cadastre-se!</a></h6>
+        </div>
+    </div>
+</div>
+<%- include ('partials/footer.ejs') %>
